@@ -1,4 +1,5 @@
-[Musement | Backend tech homework](https://gist.github.com/hpatoio/3aeea8159fb9046a2feba75d39a8d21e)
+- **Project**: [Musement | Backend tech homework](https://gist.github.com/hpatoio/3aeea8159fb9046a2feba75d39a8d21e)
+- **Author**: Anna Bobola, Senior Software Developer at [Boldare](https://www.boldare.com/) 
 
 <!-- TABLE OF CONTENTS -->
 
@@ -35,6 +36,17 @@ $ docker-compose exec php bash # connect to the PHP docker container
 root@b82b4949e9c9:/app# composer install # install dependencies inside the container
 ```
 
+#### Configuration
+```dotenv
+# .env.local
+
+API_WEATHER_KEY=c6a3df043f7b202f4199c956c95673ec # provide your API key from the https://www.weatherapi.com/
+```
+After changes, compile .env files to .env.local.php:
+
+```bash
+root@bfdb629f9356:/app# composer dump-env
+```
 ### Usage
 
 not implemented yet
