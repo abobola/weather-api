@@ -6,6 +6,7 @@
 - [Step 1 | Development](#step-1--development)
     * [Setup](#setup)
     * [Usage](#usage)
+    * [Dev Tools](#dev-tools)
 - [Step 2 | API Design]
 
 ## Step 1 | Development
@@ -37,3 +38,23 @@ root@b82b4949e9c9:/app# composer install # install dependencies inside the conta
 ### Usage
 
 not implemented yet
+
+### Dev Tools
+
+#### Coding Standards
+
+```bash
+root@f19009b07593:/app# ./bin/php-cs-fixer fix # run PHP CS Fixer
+root@f19009b07593:/app# ./bin/php-cs-fixer fix --dry-run # run the fixer without making changes
+```
+
+#### Unit tests
+```bash
+root@f19009b07593:/app# ./bin/phpunit # run PHPUnit
+root@f19009b07593:/app# ./bin/phpunit -dxdebug.mode=coverage --coverage-html var/coverage-report # run PHPUnit with coverage report
+```
+
+#### Static code analysis
+```bash
+root@f19009b07593:/app# ./bin/phpstan analyse # run PHPStan
+```
