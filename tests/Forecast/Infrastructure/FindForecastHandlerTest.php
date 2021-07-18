@@ -79,8 +79,8 @@ class FindForecastHandlerTest extends TestCase
     public function provideForecast(): array
     {
         return [
-            ['{"forecast":{"forecastday":[{"day":{"condition":{"text":"Patchy rain possible"}}},{"day":{"condition":{"text":"Patchy rain possible"}}}]}}'],
-            ['{"forecast":{"forecastday":[{"day":{"condition":{"text":"Patchy rain possible"}}},{"day":{"condition":{"text":"Partly cloudy"}}}]}}'],
+            ['{"forecast":{"forecastday":[{"day":{"condition":{"text":"Moderate rain"}}},{"day":{"condition":{"text":"Patchy rain possible"}}}]}}'],
+            ['{"forecast":{"forecastday":[{"day":{"condition":{"text":"Sunny"}}},{"day":{"condition":{"text":"Partly cloudy"}}}]}}'],
         ];
     }
 }

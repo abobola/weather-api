@@ -15,20 +15,20 @@ class TextForecastProvider
     {
     }
 
-    public function __invoke(Location $location, int $days): string
+    public function __invoke(Location $location, int $days, string $daysSeparator = self::DAYS_SEPARATOR): string
     {
-        /** @var FindForecastResponse $result */
-        $result = $this->queryBus->ask(
+        /** @var FindForecastResponse $response */
+        $response = $this->queryBus->ask(
             new FindForecastQuery($location->getLatitude(), $location->getLongitude(), $days)
         );
 
         $forecasts = [];
-        foreach ($result->getForecasts() as $forecast) {
+        foreach ($response->getForecasts() as $forecast) {
             $forecasts[$forecast->getDay()] = (string) $forecast->getCondition();
         }
 
         ksort($forecasts);
 
-        return implode(self::DAYS_SEPARATOR, $forecasts);
+        return implode($daysSeparator, $forecasts);
     }
 }
