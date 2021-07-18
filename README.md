@@ -49,7 +49,9 @@ root@bfdb629f9356:/app# composer dump-env
 ```
 ### Usage
 
-not implemented yet
+```bash
+root@bfdb629f9356:/app# ./bin/console app:fetch-cities-forecasts
+```
 
 ### Dev Tools
 
@@ -63,7 +65,7 @@ root@f19009b07593:/app# ./bin/php-cs-fixer fix --dry-run # run the fixer without
 #### Unit tests
 ```bash
 root@f19009b07593:/app# ./bin/phpunit # run PHPUnit
-root@f19009b07593:/app# ./bin/phpunit -dxdebug.mode=coverage --coverage-html var/coverage-report # run PHPUnit with coverage report
+root@f19009b07593:/app# XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html var/coverage-report # run PHPUnit with coverage report
 ```
 
 #### Static code analysis
