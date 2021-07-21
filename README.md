@@ -8,7 +8,7 @@
     * [Setup](#setup)
     * [Usage](#usage)
     * [Dev Tools](#dev-tools)
-- [Step 2 | API Design]
+- [Step 2 | API Design](#step-2--api-design)
 
 ## Step 1 | Development
 
@@ -72,3 +72,86 @@ root@f19009b07593:/app# XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-htm
 ```bash
 root@f19009b07593:/app# ./bin/phpstan analyse # run PHPStan
 ```
+
+## Step 2 | API Design
+
+- **Option 1**: `GET|PUT /weather` (recommended)
+- **Option 2**: `GET|PUT /cities/{cityId}/weather`
+
+First option gives us more flexibility and can be easily modified without breaking BC, 
+if any business requirements would be changed.
+For example, we may:
+- add geographical coordinates into DB and allow fetching forecasts within a given radius,
+- add `regionId` into DB and allow searching by it,
+- add ability to search by a given weather condition.
+
+We may use cron and any queue system, to replace all records in the DB at least once per day, 
+in order to keep forecasts up to date.
+
+### Option 1
+
+`PUT /api/v3/weather` set the forecast for a specific city and day
+
+Every time, when new forecast (with a date, generated based on the `day` from the request) is added into the DB, 
+outdated forecast will be removed. A forecast for given location per date should be unique.
+
+- **Request Body:**
+  - Schema:
+    ```json
+    {
+      "cityId*": "int",
+      "day*": "int",
+      "condition*": "string"
+    }
+    ```
+  - Example value:
+    ```json
+    {
+      "cityId": 7,
+      "day": 0,
+      "condition": "Sunny"
+    }
+    ```
+- **Responses:**
+  - 204 Forecast saved
+  - 400 Incorrect request
+     ```json
+      {
+        "cityId": "This value should not be blank."
+      }
+      ```
+  - 403 Access Denied
+
+`GET /api/v3/weather` get forecasts for a specific search criteria (city) in a limited days period.
+Without specified number of days, forecast for 1 day (today) will be returned.
+
+- **Parameters *(query)*:**
+    ```json
+    {
+      "cityId": "int",
+      "days": "int"
+    }
+    ```
+  
+- **Responses:**
+  - 200 Returns search result
+    ```json
+      [
+        {
+          "cityId":7,
+          "day": 0,
+          "condition": "Sunny"
+        },
+        {
+          "cityId":7,
+          "day": 1,
+          "condition": "Patchy rain possible"
+        }
+      ]
+    ```
+  - 400 Incorrect request
+    ```json
+      {
+        "cityId": "This value is incorrect."
+      }
+     ```
